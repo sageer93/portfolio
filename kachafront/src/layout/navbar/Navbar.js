@@ -79,11 +79,11 @@ const Navbar = () => {
         <div className="max-w-screen-2xl mx-auto px-3 sm:px-10">
           <div  className="top-bar h-14 lg:h-auto flex items-center justify-between py-2 mx-auto" >
             <Link href="/">
-              <a className="mr-3 lg:mr-12 xl:mr-12 hidden md:hidden lg:block">
+              <a className="mr-3 lg:block">
                 <Image width={100} height={50} src="/logo/richesm ORGANIC.png" alt="logo" />
               </a>
             </Link>
-            <div className="locationAdding">
+            <div className="locationAdding ">
                      <div >
                      <Image 
                       src={location}
@@ -194,7 +194,7 @@ const Navbar = () => {
               </button>
               {/* Profile dropdown */}
 
-              <button  className="pl-5 text-white mt-3 text-2xl font-bold" aria-label="Login">
+              <button  className="pl-5 text-white mt-0 text-2xl font-bold" aria-label="Login">
                 {imageUrl || userInfo?.image ? (
                   <Link href="/user/dashboard">
                     <a className="relative top-1 w-4 h-4">

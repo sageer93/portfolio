@@ -11,12 +11,37 @@ import useTranslation from "next-translate/useTranslation";
 
 //internal import
 import { sliderData } from '@utils/data';
+import axios from 'axios';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const MainCarousel = () => {
+  const [banner , setBanner] = useState([])
   const { t } = useTranslation();
+
+  const fetchBanner = async()=>{
+    try {
+      const {data} = await axios.get(`${process.env.NEXT_PUBLIC_IMAGES_BASE_URL}api/add-banner-header-fetch`)
+      console.log()
+      setBanner(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+  useEffect(()=>{
+    fetchBanner()
+  },[])
+
+  console.log(banner)
+console.log("https://main-bxox.onrender.com/uploads/banners/1694868199841-823811438.jpg")
+console.log(`${banner[0]?.banner}`)
+
   return (
     <>
-      <Swiper
+      {
+        banner.length===0?<Swiper
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
@@ -31,6 +56,7 @@ const MainCarousel = () => {
         className="mySwiper"
       >
         {sliderData.map((item, i) => (
+
           <SwiperSlide
             className="h-full relative rounded-lg overflow-hidden"
             key={i + 1}
@@ -62,7 +88,51 @@ const MainCarousel = () => {
             </div>
           </SwiperSlide>
         ))}
+      </Swiper>:<Swiper
+        spaceBetween={30}
+        centeredSlides={true}
+        autoplay={{
+          delay: 2000,
+          disableOnInteraction: false,
+        }}
+        loop={true}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[Autoplay, Pagination, Navigation]}
+        className="mySwiper"
+      >
+        {banner.map((item, i) => (
+          <SwiperSlide
+            className="h-full relative rounded-lg"
+            key={i + 1}
+          >
+            {
+              console.log(`${process.env.NEXT_PUBLIC_IMAGES_BASE_URL}${item.banner}`)
+            }
+            <div className="text-sm text-gray-600 hover:text-emerald-dark">
+            <Link href={item.link}>
+                  <a className="text-sm bg-emerald-500  rounded-md  hover:bg-emerald-600">
+                  <Image
+                layout="responsive"
+                width={950}
+                height={400}
+                src={`${process.env.NEXT_PUBLIC_IMAGES_BASE_URL}${item.banner}`}
+                alt={`${item.image}=${i}`}
+                className="object-cover"
+              />
+                  </a>
+                </Link>
+            </div>
+            {/* <div className="absolute top-0 left-0 z-10 p-r-16 flex-col flex w-full h-full place-items-start justify-center">
+              <div className="pl-4 pr-12 sm:pl-10 sm:pr-16 w-10/12 lg:w-8/12 xl:w-7/12">
+                
+              </div>
+            </div> */}
+          </SwiperSlide>
+        ))}
       </Swiper>
+      }
     </>
   );
 };

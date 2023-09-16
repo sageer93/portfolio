@@ -190,11 +190,14 @@
 .formContainer>div> input[type="text"]:focus + .ShowContainer{
     visibility: visible;
 }
-@media screen and (max-width:1280px) {
+@media screen and (max-width:1023px) {
     
-    .foote_container{
-        width: 100%;
-        margin: 0 auto;
+    .locationAdding{
+        display: none;
     }
 
+}
+
+@media screen and (max-width:) {
+    
 }
